@@ -1,0 +1,19 @@
+version: '2'
+services:
+   magento:
+      build: .
+      depends_on:
+        - mariadb
+      container_name: "codeimpact_magento"
+      #entrypoint: service php7.0-fpm start &&  nginx -g "daemon off;"
+      env_file: magento.env
+      ports: 
+        - "0.0.0.0:80:80"
+      volumes:
+        - /opt/magento:/var/www/magento
+   mariadb:
+      image: "mariadb:latest"
+      env_file: mariadb.env
+      container_name: "codeimpact_mariadb"
+      volumes:
+        - /opt/magento_db:/var/lib/mysql
